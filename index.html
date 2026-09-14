@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎄 Лондон и Кардифф · 3–13 декабря 2026</title>
+<style>
+:root{
+  --bg:#081420;
+  --bg2:#0d1f33;
+  --card:rgba(18,40,55,0.65);
+  --card-hover:rgba(24,52,72,0.85);
+  --green:#1a6b4a;
+  --green-light:#2d9c6e;
+  --gold:#d4af37;
+  --gold-light:#f4d03f;
+  --silver:#c0c8d0;
+  --cream:#f5f0e6;
+  --text:#e6edf5;
+  --muted:#8fa3b8;
+  --magic:#7ee8c8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(ellipse at top, #0f2c3d 0%, #081420 55%, #050a14 100%);
+  background-attachment:fixed;
+  color:var(--text);
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* === Звёздное небо === */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{
+  position:absolute;background:#fff;border-radius:50%;
+  animation:twinkle 4s infinite ease-in-out;
+  box-shadow:0 0 6px #fff,0 0 12px rgba(126,232,200,0.6);
+}
+@keyframes twinkle{
+  0%,100%{opacity:0.2;transform:scale(0.8)}
+  50%{opacity:1;transform:scale(1.3)}
+}
+
+/* === Снежинки === */
+.snowflake{
+  position:fixed;top:-10px;color:#fff;pointer-events:none;z-index:2;
+  animation:fall linear infinite;
+  text-shadow:0 0 8px rgba(255,255,255,0.9),0 0 15px rgba(126,232,200,0.5);
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0deg);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+
+/* === Контейнер === */
+.container{
+  max-width:1080px;margin:0 auto;padding:24px 20px;
+  position:relative;z-index:3;
+}
+
+/* === Шапка === */
+header{text-align:center;padding:50px 20px 30px;position:relative}
+header h1{
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:800;
+  background:linear-gradient(90deg,#f4d03f 0%,#ffffff 25%,#7ee8c8 50%,#ffffff 75%,#d4af37 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 6s linear infinite;
+  letter-spacing:2px;
+  filter:drop-shadow(0 0 20px rgba(212,175,55,0.4));
+}
+@keyframes shimmer{
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+header .subtitle{
+  margin-top:10px;color:var(--silver);font-size:1.05rem;
+  letter-spacing:1px;font-style:italic;
+}
+header .ornament{
+  font-size:1.4rem;color:var(--gold);margin:14px 0;
+  letter-spacing:8px;
+  animation:twinkle 3s infinite ease-in-out;
+}
+.ornament span{display:inline-block;animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* === Табы === */
+.tabs{
+  position:sticky;top:0;z-index:100;
+  display:flex;flex-wrap:wrap;gap:8px;
+  padding:12px;
+  margin:20px auto 30px;
+  background:rgba(8,20,32,0.85);
+  backdrop-filter:blur(16px);
+  border-radius:16px;
+  border:1px solid rgba(212,175,55,0.2);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+  justify-content:center;
+}
+.tab-btn{
+  background:transparent;
+  border:1px solid rgba(143,163,184,0.3);
+  color:var(--silver);
+  padding:10px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:0.92rem;
+  font-weight:600;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  font-family:inherit;
+  letter-spacing:0.3px;
+  position:relative;
+  overflow:hidden;
+}
+.tab-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%);
+  transform:translateX(-100%);
+  transition:transform 0.6s;
+}
+.tab-btn:hover::before{transform:translateX(100%)}
+.tab-btn:hover{
+  color:var(--gold-light);
+  border-color:rgba(212,175,55,0.5);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(212,175,55,0.25);
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,rgba(26,107,74,0.9),rgba(45,156,110,0.7));
+  border-color:var(--gold);
+  color:#fff;
+  box-shadow:0 6px 24px rgba(45,156,110,0.5),inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* === Панели === */
+.tab-panel{
+  display:none;
+  animation:fadeIn 0.5s ease-out;
+}
+.tab-panel.active{display:block}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+section{
+  background:var(--card);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:28px;
+  margin-bottom:24px;
+  border:1px solid rgba(212,175,55,0.15);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.04);
+  transition:border-color 0.3s, box-shadow 0.3s;
+}
+section:hover{
+  border-color:rgba(212,175,55,0.3);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35),0 0 40px rgba(212,175,55,0.08),inset 0 1px 0 rgba(255,255,255,0.04);
+}
+section h2{
+  font-size:1.6rem;
+  color:var(--gold-light);
+  margin-bottom:20px;
+  padding-left:16px;
+  border-left:4px solid var(--gold);
+  text-shadow:0 0 20px rgba(212,175,55,0.3);
+  display:flex;align-items:center;gap:10px;
+}
+
+/* === Карточки === */
+.card{
+  background:linear-gradient(135deg,rgba(26,107,74,0.18),rgba(13,31,51,0.5));
+  padding:18px 22px;
+  border-radius:14px;
+  margin:14px 0;
+  border:1px solid rgba(45,156,110,0.25);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.card p{margin:6px 0}
+.card strong{color:var(--gold-light)}
+
+/* === Дни === */
+.day{
+  background:linear-gradient(135deg,rgba(26,107,74,0.15),rgba(13,31,51,0.4));
+  border-left:4px solid var(--green-light);
+  padding:20px 22px;
+  margin:18px 0;
+  border-radius:0 14px 14px 0;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  position:relative;
+  overflow:hidden;
+}
+.day::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--gold),var(--green-light));
+  opacity:0;transition:opacity 0.3s;
+}
+.day:hover::before{opacity:1}
+.day:hover{
+  transform:translateX(6px);
+  box-shadow:0 8px 32px rgba(45,156,110,0.25);
+  border-left-color:var(--gold);
+}
+.day h3{
+  font-size:1.2rem;
+  color:var(--gold-light);
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.day p{margin:5px 0}
+.time{
+  font-weight:700;color:var(--magic);
+  display:inline-block;min-width:80px;
+  font-variant-numeric:tabular-nums;
+}
+.address{
+  font-size:0.88rem;color:var(--muted);
+  display:block;margin-top:3px;
+}
+.address a{color:var(--magic);text-decoration:none;transition:color 0.2s}
+.address a:hover{color:var(--gold-light);text-decoration:underline}
+
+/* === Заметки === */
+.note-box{
+  background:linear-gradient(135deg,rgba(212,175,55,0.12),rgba(26,107,74,0.15));
+  border-left:4px solid var(--gold);
+  padding:16px 20px;
+  margin:18px 0;
+  border-radius:0 14px 14px 0;
+}
+.note-box strong{color:var(--gold-light)}
+.note-box p{margin:8px 0}
+
+/* === Чеклисты === */
+.checklist{list-style:none;padding:0}
+.checklist li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 18px;
+  margin-bottom:10px;
+  background:linear-gradient(135deg,rgba(26,107,74,0.1),rgba(13,31,51,0.3));
+  border:1px solid rgba(45,156,110,0.2);
+  border-radius:12px;
+  transition:all 0.3s;
+}
+.checklist li:hover{
+  background:linear-gradient(135deg,rgba(26,107,74,0.2),rgba(13,31,51,0.4));
+  border-color:rgba(212,175,55,0.35);
+  transform:translateX(4px);
+}
+.checklist li.done{
+  background:linear-gradient(135deg,rgba(45,156,110,0.25),rgba(26,107,74,0.2));
+  border-color:var(--gold);
+}
+.checklist li.done label{opacity:0.65;text-decoration:line-through;text-decoration-color:var(--gold)}
+.checklist input[type="checkbox"]{
+  appearance:none;
+  width:22px;height:22px;
+  border:2px solid var(--green-light);
+  border-radius:6px;
+  cursor:pointer;
+  flex-shrink:0;
+  margin-top:3px;
+  position:relative;
+  transition:all 0.25s;
+  background:rgba(0,0,0,0.2);
+}
+.checklist input[type="checkbox"]:hover{
+  border-color:var(--gold);
+  box-shadow:0 0 12px rgba(212,175,55,0.5);
+}
+.checklist input[type="checkbox"]:checked{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  border-color:var(--gold-light);
+  box-shadow:0 0 16px rgba(212,175,55,0.7);
+}
+.checklist input[type="checkbox"]:checked::after{
+  content:'✓';
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  color:#081420;font-weight:900;font-size:15px;
+  animation:pop 0.3s;
+}
+@keyframes pop{
+  0%{transform:scale(0)}
+  70%{transform:scale(1.3)}
+  100%{transform:scale(1)}
+}
+.checklist label{cursor:pointer;flex:1;font-size:0.95rem}
+.checklist label a{color:var(--magic);text-decoration:none;font-size:0.88rem}
+.checklist label a:hover{text-decoration:underline;color:var(--gold-light)}
+
+.reset-btn{
+  background:transparent;
+  border:1px dashed rgba(212,175,55,0.4);
+  color:var(--silver);
+  padding:8px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:0.85rem;
+  font-family:inherit;
+  margin-top:16px;
+  transition:all 0.3s;
+}
+.reset-btn:hover{
+  border-color:var(--gold);
+  color:var(--gold-light);
+  background:rgba(212,175,55,0.08);
+}
+.progress-info{
+  font-size:0.85rem;color:var(--muted);
+  margin-left:12px;font-style:italic;
+}
+
+/* === Карусель === */
+.carousel-wrap{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  border:2px solid rgba(212,175,55,0.3);
+  box-shadow:0 12px 48px rgba(0,0,0,0.5),0 0 60px rgba(212,175,55,0.1);
+  background:#0a1628;
+}
+.slides{position:relative;height:420px}
+.slide{
+  position:absolute;inset:0;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.7s ease, visibility 0.7s;
+  background-size:cover;
+  background-position:center;
+  display:flex;align-items:flex-end;
+}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(8,20,32,0.15) 0%,rgba(8,20,32,0.55) 55%,rgba(8,20,32,0.95) 100%);
+}
+.slide-content{
+  position:relative;z-index:2;
+  padding:28px 32px;
+  width:100%;
+  animation:slideUp 0.8s ease-out;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.slide-content h3{
+  font-size:1.7rem;
+  color:var(--gold-light);
+  text-shadow:0 2px 20px rgba(0,0,0,0.9),0 0 30px rgba(212,175,55,0.5);
+  margin-bottom:8px;
+}
+.slide-content .addr{
+  color:var(--cream);
+  font-size:0.92rem;
+  margin-bottom:10px;
+  text-shadow:0 1px 8px rgba(0,0,0,0.9);
+}
+.slide-content .desc{
+  color:#d6e2ee;
+  font-size:0.95rem;
+  max-width:720px;
+  text-shadow:0 1px 8px rgba(0,0,0,0.9);
+}
+.carousel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(8,20,32,0.7);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(212,175,55,0.5);
+  color:var(--gold-light);
+  width:48px;height:48px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.6rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;
+  z-index:5;
+  font-family:inherit;
+}
+.carousel-btn:hover{
+  background:rgba(212,175,55,0.3);
+  color:#fff;
+  transform:translateY(-50%) scale(1.1);
+  box-shadow:0 0 20px rgba(212,175,55,0.6);
+}
+.carousel-btn.prev{left:16px}
+.carousel-btn.next{right:16px}
+.dots{
+  display:flex;justify-content:center;gap:8px;
+  padding:14px;
+  background:rgba(8,20,32,0.6);
+  position:relative;z-index:3;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(143,163,184,0.4);
+  cursor:pointer;
+  transition:all 0.3s;
+  border:none;
+  padding:0;
+}
+.dot:hover{background:rgba(212,175,55,0.6);transform:scale(1.2)}
+.dot.active{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  width:28px;border-radius:5px;
+  box-shadow:0 0 12px rgba(212,175,55,0.7);
+}
+
+.map-wrap{
+  margin-top:20px;
+  border-radius:18px;
+  overflow:hidden;
+  border:2px solid rgba(45,156,110,0.3);
+  box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 40px rgba(45,156,110,0.1);
+  position:relative;
+}
+.map-wrap::before{
+  content:'🗺️ Интерактивная карта';
+  position:absolute;top:12px;left:12px;z-index:2;
+  background:rgba(8,20,32,0.85);
+  backdrop-filter:blur(8px);
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:0.82rem;
+  color:var(--gold-light);
+  border:1px solid rgba(212,175,55,0.3);
+}
+.map-wrap iframe{
+  width:100%;height:380px;border:0;display:block;
+  filter:saturate(0.95);
+}
+
+/* === Сетка === */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
+.grid .option{
+  background:linear-gradient(135deg,rgba(26,107,74,0.18),rgba(13,31,51,0.4));
+  padding:18px;
+  border-radius:12px;
+  border:1px solid rgba(45,156,110,0.25);
+  transition:all 0.3s;
+}
+.grid .option:hover{
+  transform:translateY(-4px);
+  border-color:var(--gold);
+  box-shadow:0 10px 30px rgba(212,175,55,0.15);
+}
+.grid .option strong{color:var(--gold-light);display:block;margin-bottom:6px}
+
+/* === Футер === */
+footer{
+  text-align:center;padding:40px 20px;
+  color:var(--muted);font-size:0.9rem;
+  position:relative;z-index:3;
+}
+footer .heart{
+  color:var(--gold);font-size:1.3rem;
+  display:inline-block;animation:beat 1.5s infinite;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+}
+footer .signature{
+  margin-top:10px;font-size:0.8rem;color:#5a6b7d;
+}
+
+@media (max-width:700px){
+  .tabs{padding:8px;gap:6px}
+  .tab-btn{padding:8px 12px;font-size:0.82rem}
+  section{padding:20px}
+  .slides{height:340px}
+  .slide-content{padding:20px}
+  .slide-content h3{font-size:1.3rem}
+  .carousel-btn{width:38px;height:38px;font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+  <header>
+    <div class="ornament"><span>❄</span> ✦ <span>❄</span> ✦ <span>❄</span></div>
+    <h1>Лондон &amp; Кардифф</h1>
+    <p class="subtitle">3 – 13 декабря 2026 · Elvira Pomazan &amp; Artem Dobrodomov</p>
+    <div class="ornament">🎄 ✦ 🎁 ✦ ⭐</div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="overview">🏠 Обзор</button>
+    <button class="tab-btn" data-tab="plan">📅 План по дням</button>
+    <button class="tab-btn" data-tab="sights">🎡 Достопримечательности</button>
+    <button class="tab-btn" data-tab="tickets">🎫 Билеты</button>
+    <button class="tab-btn" data-tab="visa">🛂 Виза</button>
+    <button class="tab-btn" data-tab="notes">📝 Заметки</button>
+  </nav>
+
+  <!-- ========== ОБЗОР ========== -->
+  <div class="tab-panel active" id="overview">
+    <section>
+      <h2>✈️ Перелёты</h2>
+      <div class="card">
+        <p><strong>Заказ 21595889 · Azal · Эконом</strong></p>
+        <p><strong>Туда (3 декабря):</strong> DME 13:05 → GYD 17:30 → GYD 19:05 → LHR 21:05</p>
+        <p><strong>Обратно (13 декабря):</strong> LGW 10:25 → GYD 19:55 → GYD 21:30 → VKO 23:55</p>
+        <p>🧳 Ручная кладь: 10 кг (55×40×23 см) — 1 шт · Багаж: 23 кг — 1 шт</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🏨 Отель в Лондоне</h2>
+      <div class="card">
+        <p><strong>Point A Hotel London Waterloo</strong></p>
+        <p class="address">195-203 Waterloo Rd, London SE1 8UX · <a href="https://www.google.com/maps/search/?api=1&query=195-203%20Waterloo%20Rd%2C%20London%20SE1%208UX" target="_blank">Google Maps</a></p>
+        <p>Рекомендуется бронировать на все ночи в Лондоне (3–12 декабря), чтобы не возить чемоданы.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🎸 Концерт Placebo</h2>
+      <div class="card">
+        <p><strong>30th Anniversary Tour</strong></p>
+        <p>📅 Пн, 7 декабря 2026, 18:30</p>
+        <p>📍 Utilita Arena Cardiff — Mary Ann St, Cardiff CF10 2EQ · <a href="https://www.google.com/maps/search/?api=1&query=Utilita%20Arena%20Cardiff%2C%20Mary%20Ann%20St%2C%20Cardiff%20CF10%202EQ" target="_blank">Google Maps</a></p>
+        <p>🛏️ Ночь в Кардиффе: <strong>Cardiff Marriott Hotel</strong> (Mill Ln, CF10 1EZ) или <strong>Four Points Flex by Sheraton Cardiff</strong> (Saunders Rd, CF10 1RH)</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== ПЛАН ========== -->
+  <div class="tab-panel" id="plan">
+    <section>
+      <h2>📅 План по дням</h2>
+
+      <div class="day">
+        <h3>❄ День 1 — Чт, 3 декабря: Прибытие</h3>
+        <p><span class="time">13:05</span> Вылет из Москвы (DME).</p>
+        <p><span class="time">21:05</span> Прибытие в Лондон (LHR), терминал 4.</p>
+        <p><span class="time">22:30</span> Трансфер в <strong>Point A Hotel London Waterloo</strong>. Заселение и отдых.</p>
+      </div>
+
+      <div class="day">
+        <h3>❄ День 2 — Пт, 4 декабря: Вестминстер и Букингем</h3>
+        <p><span class="time">09:00</span> <strong>Биг-Бен и Вестминстерский дворец</strong><br><span class="address">Westminster, London SW1A 0AA · <a href="https://www.google.com/maps/search/?api=1&query=Westminster%2C%20London%20SW1A%200AA" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">11:00</span> <strong>Вестминстерское аббатство</strong><br><span class="address">Dean's Yard, London SW1P 3PA · <a href="https://www.google.com/maps/search/?api=1&query=Dean%27s%20Yard%2C%20London%20SW1P%203PA" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">13:30</span> Обед в пабе в районе Вестминстера.</p>
+        <p><span class="time">15:00</span> <strong>Смена караула у Букингемского дворца</strong><br><span class="address">London SW1A 1AA · <a href="https://www.google.com/maps/search/?api=1&query=Buckingham%20Palace%2C%20London%20SW1A%201AA" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">17:00</span> <strong>Лондонский глаз</strong><br><span class="address">Riverside Building, County Hall, London SE1 7PB · <a href="https://www.google.com/maps/search/?api=1&query=London%20Eye%2C%20Riverside%20Building%2C%20County%20Hall%2C%20London%20SE1%207PB" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">19:00</span> Ужин.</p>
+      </div>
+
+      <div class="day">
+        <h3>❄ День 3 — Сб, 5 декабря: Тауэр и Тауэрский мост</h3>
+        <p><span class="time">09:30</span> <strong>Лондонский Тауэр</strong><br><span class="address">London EC3N 4AB · <a href="https://www.google.com/maps/search/?api=1&query=Tower%20of%20London%2C%20London%20EC3N%204AB" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">13:00</span> Обед: <strong>Боро-маркет</strong><br><span class="address">8 Southwark St, London SE1 1TL · <a href="https://www.google.com/maps/search/?api=1&query=Borough%20Market%2C%208%20Southwark%20St%2C%20London%20SE1%201TL" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">15:00</span> <strong>Тауэрский мост</strong><br><span class="address">Tower Bridge Rd, London SE1 2UP · <a href="https://www.google.com/maps/search/?api=1&query=Tower%20Bridge%2C%20Tower%20Bridge%20Rd%2C%20London%20SE1%202UP" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">18:00</span> Прогулка по рождественским огням: Оксфорд-стрит, Риджент-стрит.</p>
+      </div>
+
+      <div class="day">
+        <h3>⚡ День 4 — Вс, 6 декабря: Warner Bros. Studio + Платформа 9¾</h3>
+        <p><span class="time">08:00</span> Выезд из отеля. Метро Waterloo → Euston (Northern line, ~15 мин).</p>
+        <p><span class="time">09:00</span> Поезд London Euston → Watford Junction (~20–25 мин).</p>
+        <p><span class="time">09:30</span> Шаттл-бас Watford Junction → Warner Bros. Studio (~15 мин).</p>
+        <p><span class="time">10:00–14:00</span> <strong>Warner Bros. Studio Tour London</strong> — The Making of Harry Potter.<br><span class="address">Studio Tour Dr, Leavesden, Watford WD25 7LR · <a href="https://www.google.com/maps/search/?api=1&query=Warner%20Bros.%20Studio%20Tour%20London%2C%20Watford%20WD25%207LR" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">15:00–16:00</span> Обратная дорога: шаттл → Watford Junction → Euston.</p>
+        <p><span class="time">16:30–17:30</span> <strong>Платформа 9¾</strong> на вокзале Кингс-Кросс.<br><span class="address">Euston Rd, London N1 9AL · <a href="https://www.google.com/maps/search/?api=1&query=Platform%209%C2%BE%2C%20King%27s%20Cross%2C%20London%20N1%209AL" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">18:00</span> Ужин в центре Лондона.</p>
+        <p><span class="time">19:30</span> Возвращение в отель Waterloo.</p>
+        <div class="note-box">
+          <strong>💫 Важно:</strong> Билеты в Warner Bros. покупать заранее с фиксированным временем входа. Шаттл-бас от Watford Junction платный (~£3–4 туда-обратно).
+        </div>
+      </div>
+
+      <div class="day">
+        <h3>🎸 День 5 — Пн, 7 декабря: Кардифф, концерт Placebo</h3>
+        <p><span class="time">10:00</span> Выезд из отеля, метро до <strong>London Paddington</strong>.</p>
+        <p><span class="time">11:00</span> Поезд <strong>London Paddington → Cardiff Central</strong> (~2 ч).</p>
+        <p><span class="time">13:00</span> Прибытие в Кардифф. Размещение в отеле:<br>
+          <strong>Cardiff Marriott Hotel</strong> — Mill Ln, CF10 1EZ · <a href="https://www.google.com/maps/search/?api=1&query=Cardiff%20Marriott%20Hotel%2C%20Mill%20Ln%2C%20Cardiff%20CF10%201EZ" target="_blank">Google Maps</a><br>
+          <em>или</em> <strong>Four Points Flex by Sheraton Cardiff</strong> — Saunders Rd, CF10 1RH · <a href="https://www.google.com/maps/search/?api=1&query=Four%20Points%20Flex%20by%20Sheraton%20Cardiff" target="_blank">Google Maps</a>
+        </p>
+        <p><span class="time">14:30</span> <strong>Кардиффский замок</strong><br><span class="address">Castle St, Cardiff CF10 3RB · <a href="https://www.google.com/maps/search/?api=1&query=Cardiff%20Castle%2C%20Castle%20St%2C%20Cardiff%20CF10%203RB" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">18:30</span> <strong>Концерт Placebo</strong> — Utilita Arena Cardiff<br><span class="address">Mary Ann St, Cardiff CF10 2EQ · <a href="https://www.google.com/maps/search/?api=1&query=Utilita%20Arena%20Cardiff" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">23:00</span> Ночь в Кардиффе.</p>
+      </div>
+
+      <div class="day">
+        <h3>🔍 День 6 — Вт, 8 декабря: Возвращение, Шерлок Холмс</h3>
+        <p><span class="time">10:00</span> Поезд <strong>Cardiff Central → London Paddington</strong>.</p>
+        <p><span class="time">12:00</span> Прибытие в Лондон, возвращение в отель.</p>
+        <p><span class="time">14:00</span> <strong>Музей Шерлока Холмса</strong><br><span class="address">221b Baker St, London NW1 6XE · <a href="https://www.google.com/maps/search/?api=1&query=Sherlock%20Holmes%20Museum%2C%20221b%20Baker%20St" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">18:00</span> Ужин: <strong>Sherlock Holmes Pub</strong><br><span class="address">10-11 Northumberland St, London WC2N 5DB · <a href="https://www.google.com/maps/search/?api=1&query=Sherlock%20Holmes%20Pub%2C%20Northumberland%20St" target="_blank">Google Maps</a></span></p>
+      </div>
+
+      <div class="day">
+        <h3>🔬 День 7 — Ср, 9 декабря: Доктор Кто и музеи</h3>
+        <p><span class="time">09:30</span> <strong>Музей науки</strong><br><span class="address">Exhibition Rd, South Kensington, SW7 2DD · <a href="https://www.google.com/maps/search/?api=1&query=Science%20Museum%2C%20Exhibition%20Rd" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">13:00</span> Обед в Южном Кенсингтоне.</p>
+        <p><span class="time">14:30</span> <strong>Музей естествознания</strong><br><span class="address">Cromwell Rd, SW7 5BD · <a href="https://www.google.com/maps/search/?api=1&query=Natural%20History%20Museum%2C%20Cromwell%20Rd" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">16:00</span> <strong>Музей Виктории и Альберта</strong><br><span class="address">Cromwell Rd, SW7 2RL · <a href="https://www.google.com/maps/search/?api=1&query=Victoria%20and%20Albert%20Museum" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">18:00</span> Прогулка по Гайд-парку и Кенсингтонским садам.</p>
+      </div>
+
+      <div class="day">
+        <h3>🎭 День 8 — Чт, 10 декабря: Ковент-Гарден и Сохо</h3>
+        <p><span class="time">10:00</span> <strong>Ковент-Гарден</strong><br><span class="address">Covent Garden, WC2E 8RF · <a href="https://www.google.com/maps/search/?api=1&query=Covent%20Garden%2C%20London" target="_blank">Google Maps</a></span></p>
+        <p><span class="time">13:00</span> Обед в Сохо.</p>
+        <p><span class="time">14:30</span> <strong>Лестер-сквер</strong> · <span class="address">WC2H 7LU · <a href="https://www.google.com/maps/search/?api=1&query=Leicester%20Square" target="_blank">Карта</a></span></p>
+        <p><span class="time">15:30</span> <strong>Трафальгарская площадь</strong> · <span class="address">WC2N 5DN · <a href="https://www.google.com/maps/search/?api=1&query=Trafalgar%20Square" target="_blank">Карта</a></span></p>
+        <p><span class="time">18:00</span> Вест-Энд: театр или прогулка.</p>
+      </div>
+
+      <div class="day">
+        <h3>📚 День 9 — Пт, 11 декабря: Оксфорд</h3>
+        <p><span class="time">09:00</span> Поезд London Paddington / Marylebone → Оксфорд (~1 ч).</p>
+        <p>🎓 <strong>Крайст-Чёрч</strong> (St Aldate's, OX1 1DP) · <strong>Бодлианская библиотека</strong> (Broad St, OX1 3BG) · университетские колледжи.</p>
+        <p><span class="time">18:00</span> Возвращение в Лондон.</p>
+      </div>
+
+      <div class="day">
+        <h3>🌟 День 10 — Сб, 12 декабря: День на выбор</h3>
+        <div class="grid">
+          <div class="option"><strong>🎬 Warner Bros. Studio</strong>Полноценная поездка, если не были 6-го. Watford WD25 7LR.</div>
+          <div class="option"><strong>🎄 Челсийская зимняя деревня</strong>Royal Hospital Rd, SW3 4SR.</div>
+          <div class="option"><strong>🎵 Royal Albert Hall</strong>«Один дома» в концертном исполнении. SW7 2AP.</div>
+          <div class="option"><strong>🛍️ Bicester Village</strong>Крупный аутлет. OX26 6WD.</div>
+        </div>
+      </div>
+
+      <div class="day">
+        <h3>🛫 День 11 — Вс, 13 декабря: Отъезд</h3>
+        <p><span class="time">06:45</span> Выезд из отеля.</p>
+        <p><span class="time">07:00–08:15</span> Waterloo → London Bridge → Gatwick Airport (Thameslink) или такси.</p>
+        <p><span class="time">08:25</span> Быть в аэропорту <strong>Gatwick, терминал N</strong>.</p>
+        <p><span class="time">10:25</span> Вылет <strong>LGW → Баку</strong>.</p>
+        <p><span class="time">19:55</span> Прибытие в Баку.</p>
+        <p><span class="time">21:30</span> Вылет Баку → Москва.</p>
+        <p><span class="time">23:55</span> Прибытие в <strong>Внуково (VKO), терминал А</strong>.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== ДОСТОПРИМЕЧАТЕЛЬНОСТИ ========== -->
+  <div class="tab-panel" id="sights">
+    <section>
+      <h2>🎡 Достопримечательности</h2>
+      <p style="color:var(--muted);margin-bottom:18px">Листайте карусель — карта ниже обновляется автоматически.</p>
+
+      <div class="carousel-wrap">
+        <div class="slides" id="slides"></div>
+        <button class="carousel-btn prev" id="prevBtn" aria-label="Назад">‹</button>
+        <button class="carousel-btn next" id="nextBtn" aria-label="Вперёд">›</button>
+        <div class="dots" id="dots"></div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe id="mapFrame" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== БИЛЕТЫ ========== -->
+  <div class="tab-panel" id="tickets">
+    <section>
+      <h2>🎫 Чеклист билетов</h2>
+      <p style="color:var(--muted);margin-bottom:16px">Отмечайте по мере покупки. Прогресс сохраняется автоматически.</p>
+      <ul class="checklist" data-list="tickets">
+        <li><input type="checkbox" id="t1"><label for="t1"><strong>Warner Bros. Studio Tour London</strong> — на 6 декабря с фиксированным временем.<br><a href="https://www.wbstudiotour.co.uk/tickets-2/" target="_blank">wbstudiotour.co.uk</a></label></li>
+        <li><input type="checkbox" id="t2"><label for="t2"><strong>Поезд London → Cardiff</strong> — на 7 декабря. Заранее дешевле.<br><a href="https://www.thetrainline.com/" target="_blank">Trainline</a> · <a href="https://www.gwr.com/" target="_blank">GWR</a></label></li>
+        <li><input type="checkbox" id="t3"><label for="t3"><strong>Поезд Cardiff → London</strong> — на 8 декабря.<br><a href="https://www.thetrainline.com/" target="_blank">Trainline</a></label></li>
+        <li><input type="checkbox" id="t4"><label for="t4"><strong>Отель в Кардиффе</strong> — ночь 7→8 декабря. Cardiff Marriott или Four Points Flex.</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5"><strong>Лондонский глаз</strong> — на 4 декабря.<br><a href="https://www.londoneye.com/" target="_blank">londoneye.com</a></label></li>
+        <li><input type="checkbox" id="t6"><label for="t6"><strong>Вестминстерское аббатство</strong> — на 4 декабря.<br><a href="https://www.westminster-abbey.org/" target="_blank">westminster-abbey.org</a></label></li>
+        <li><input type="checkbox" id="t7"><label for="t7"><strong>Лондонский Тауэр</strong> — на 5 декабря.<br><a href="https://www.hrp.org.uk/tower-of-london/" target="_blank">hrp.org.uk</a></label></li>
+        <li><input type="checkbox" id="t8"><label for="t8"><strong>Музей Шерлока Холмса</strong> — на 8 декабря.<br><a href="https://www.sherlock-holmes.co.uk/" target="_blank">sherlock-holmes.co.uk</a></label></li>
+        <li><input type="checkbox" id="t9"><label for="t9"><strong>Поезд London → Oxford</strong> — на 11 декабря.<br><a href="https://www.thetrainline.com/" target="_blank">Trainline</a></label></li>
+        <li><input type="checkbox" id="t10"><label for="t10"><strong>London Pass</strong> (опционально) — экономит на платных достопримечательностях.<br><a href="https://www.londonpass.com/" target="_blank">londonpass.com</a></label></li>
+        <li><input type="checkbox" id="t11"><label for="t11"><strong>Bicester Village Shopping Express</strong> — если выберете на 12 декабря.<br><a href="https://www.thebicestercollection.com/bicester-village/en/shopping-express" target="_blank">thebicestercollection.com</a></label></li>
+      </ul>
+      <button class="reset-btn" data-reset="tickets">↺ Сбросить прогресс</button>
+      <span class="progress-info" id="progress-tickets"></span>
+    </section>
+  </div>
+
+  <!-- ========== ВИЗА ========== -->
+  <div class="tab-panel" id="visa">
+    <section>
+      <h2>🛂 Виза в Великобританию (для граждан РФ)</h2>
+      <div class="note-box">
+        <strong>💡 Важно:</strong> С 2026 года Великобритания выдаёт <strong>электронные визы (eVisa)</strong>. Паспорт не нужно оставлять в визовом центре. Подача через <strong>VFS Global</strong>. Срок рассмотрения для граждан РФ — <strong>4–5 недель</strong>. Подавайте минимум за 2–3 месяца до поездки.
+      </div>
+      <ul class="checklist" data-list="visa">
+        <li><input type="checkbox" id="v1"><label for="v1"><strong>Загранпаспорт</strong> — действующий, минимум 1 чистая страница, покрывает всю поездку.</label></li>
+        <li><input type="checkbox" id="v2"><label for="v2"><strong>Онлайн-анкета</strong> на GOV.UK (Standard Visitor Visa).<br><a href="https://www.gov.uk/standard-visitor/apply-standard-visitor-visa" target="_blank">gov.uk</a></label></li>
+        <li><input type="checkbox" id="v3"><label for="v3"><strong>Оплата визового сбора</strong> — £135 (виза на 6 мес.).<br><a href="https://www.gov.uk/government/publications/visa-regulations-revised-table" target="_blank">gov.uk</a></label></li>
+        <li><input type="checkbox" id="v4"><label for="v4"><strong>Запись в VFS Global</strong> на сдачу биометрии (Москва, СПб, Екатеринбург, Новосибирск, Ростов-на-Дону).<br><a href="https://www.vfsglobal.com/en/individuals/index.html" target="_blank">vfsglobal.com</a></label></li>
+        <li><input type="checkbox" id="v5"><label for="v5"><strong>Биометрия</strong> — отпечатки и фото, лично в визовом центре.</label></li>
+        <li><input type="checkbox" id="v6"><label for="v6"><strong>Банковские выписки</strong> — за 3–6 месяцев, с переводом на английский.</label></li>
+        <li><input type="checkbox" id="v7"><label for="v7"><strong>Справка с работы</strong> — должность, зарплата, даты отпуска, на английском.</label></li>
+        <li><input type="checkbox" id="v8"><label for="v8"><strong>Подтверждение брони отеля</strong> — Point A Hotel London Waterloo (все ночи в Лондоне).</label></li>
+        <li><input type="checkbox" id="v9"><label for="v9"><strong>Подтверждение авиабилетов</strong> — маршрутная квитанция (уже есть).</label></li>
+        <li><input type="checkbox" id="v10"><label for="v10"><strong>Страховой полис</strong> — медстраховка на период поездки (рекомендуется).</label></li>
+        <li><input type="checkbox" id="v11"><label for="v11"><strong>Сопроводительное письмо</strong> — цель поездки, маршрут, кто оплачивает.</label></li>
+        <li><input type="checkbox" id="v12"><label for="v12"><strong>Свидетельство о браке</strong> — копия (вы едете с супругой).</label></li>
+        <li><input type="checkbox" id="v13"><label for="v13"><strong>Документы на недвижимость</strong> — как подтверждение связей с РФ (если есть).</label></li>
+        <li><input type="checkbox" id="v14"><label for="v14"><strong>Копии старых виз</strong> — Шенген, США, Канада и др.</label></li>
+      </ul>
+      <button class="reset-btn" data-reset="visa">↺ Сбросить прогресс</button>
+      <span class="progress-info" id="progress-visa"></span>
+    </section>
+  </div>
+
+  <!-- ========== ЗАМЕТКИ ========== -->
+  <div class="tab-panel" id="notes">
+    <section>
+      <h2>📝 Важные заметки</h2>
+      <div class="note-box">
+        <p><strong>🚇 Транспорт:</strong> Oyster card или бесконтактная карта. Метро (Tube) — быстрее всего. Для поездов в Кардифф и Оксфорд — заранее через Trainline или National Rail.</p>
+        <p><strong>🎫 London Pass:</strong> Стоит брать при посещении 3+ платных мест — экономит деньги и время в очередях.</p>
+        <p><strong>🌦️ Погода:</strong> Декабрь — холодно и дождливо. Тёплая водонепроницаемая одежда и удобная обувь обязательны.</p>
+        <p><strong>🎄 Рождество:</strong> В начале декабря Лондон уже полностью украшен. 25–26 декабря транспорт работает по особому расписанию, но вы уезжаете 13-го.</p>
+        <p><strong>🚕 Такси из аэропорта:</strong> Uber, Bolt, FreeNow, Gett — от £50 до £120 из Хитроу. Чёрные кэбы дороже.</p>
+        <p><strong>📱 Связь:</strong> Местная SIM или eSIM (EE, Vodafone, Three) для интернета.</p>
+        <p><strong>💳 Деньги:</strong> Карты везде, но немного наличных на мелкие расходы не помешает.</p>
+        <p><strong>📞 Онлайн-регистрация:</strong> Уточните правила на сайте авиакомпании — некоторые берут деньги за регистрацию в аэропорту.</p>
+        <p><strong>🔌 Розетки:</strong> Тип G, нужен переходник (не как в Европе).</p>
+        <p><strong>☎️ Экстренные службы:</strong> 999 или 112.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Приятного путешествия! <span class="heart">❤</span></p>
+    <p class="signature">Сделано с любовью для Elvira &amp; Artem · Декабрь 2026</p>
+  </footer>
+</div>
+
+<script>
+/* =============== ЗВЁЗДЫ =============== */
+(function createStars(){
+  const wrap = document.getElementById('stars');
+  const count = 90;
+  for (let i = 0; i < count; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.2 + 0.6;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    s.style.animationDuration = (2 + Math.random() * 4) + 's';
+    wrap.appendChild(s);
+  }
+})();
+
+/* =============== СНЕЖИНКИ =============== */
+const SNOW_CHARS = ['❄','❅','❆','✦','✧'];
+(function snowLoop(){
+  function createSnowflake(){
+    const flake = document.createElement('div');
+    flake.className = 'snowflake';
+    flake.textContent = SNOW_CHARS[Math.floor(Math.random() * SNOW_CHARS.length)];
+    flake.style.left = Math.random() * 100 + 'vw';
+    flake.style.fontSize = (Math.random() * 18 + 8) + 'px';
+    flake.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    flake.style.opacity = Math.random() * 0.6 + 0.4;
+    document.body.appendChild(flake);
+    setTimeout(() => flake.remove(), 16000);
+  }
+  setInterval(createSnowflake, 380);
+  for (let i = 0; i < 25; i++) setTimeout(createSnowflake, i * 180);
+})();
+
+/* =============== ТАБЫ =============== */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    tabBtns.forEach(b => b.classList.toggle('active', b === btn));
+    tabPanels.forEach(p => p.classList.toggle('active', p.id === target));
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+
+/* =============== ЧЕКЛИСТЫ + localStorage =============== */
+const STORAGE_PREFIX = 'london_trip_v3_';
+function updateProgress(listName){
+  const list = document.querySelector(`.checklist[data-list="${listName}"]`);
+  if (!list) return;
+  const items = list.querySelectorAll('input[type="checkbox"]');
+  const done = [...items].filter(i => i.checked).length;
+  const info = document.getElementById('progress-' + listName);
+  if (info) info.textContent = `Готово: ${done} / ${items.length}`;
+}
+function initChecklists(){
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
+    const key = STORAGE_PREFIX + cb.id;
+    if (localStorage.getItem(key) === 'true'){
+      cb.checked = true;
+      cb.closest('li').classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked);
+      cb.closest('li').classList.toggle('done', cb.checked);
+      const list = cb.closest('.checklist');
+      if (list) updateProgress(list.dataset.list);
+    });
+  });
+  document.querySelectorAll('.checklist').forEach(l => updateProgress(l.dataset.list));
+}
+document.querySelectorAll('.reset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const listName = btn.dataset.reset;
+    const list = document.querySelector(`.checklist[data-list="${listName}"]`);
+    if (!list) return;
+    if (!confirm('Сбросить прогресс этого чеклиста?')) return;
+    list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+      cb.closest('li').classList.remove('done');
+      localStorage.removeItem(STORAGE_PREFIX + cb.id);
+    });
+    updateProgress(listName);
+  });
+});
+initChecklists();
+
+/* =============== КАРУСЕЛЬ =============== */
+const attractions = [
+  {
+    name: 'Биг-Бен и Вестминстерский дворец',
+    addr: 'Westminster, London SW1A 0AA',
+    query: 'Big Ben, Westminster, London',
+    desc: 'Символ Лондона и главная башня Вестминстерского дворца. Рядом — знаменитый мост и набережная Темзы.',
+    img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80',
+    icon: '🕰️'
+  },
+  {
+    name: 'Вестминстерское аббатство',
+    addr: "Dean's Yard, London SW1P 3PA",
+    query: 'Westminster Abbey, London',
+    desc: 'Место коронации британских монархов с 1066 года. Готическая архитектура и захоронения великих англичан.',
+    img: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=1400&q=80',
+    icon: '⛪'
+  },
+  {
+    name: 'Букингемский дворец',
+    addr: 'London SW1A 1AA',
+    query: 'Buckingham Palace, London',
+    desc: 'Официальная резиденция британского монарха. Смена караула — в 11:00 в определённые дни.',
+    img: 'https://images.unsplash.com/photo-1520986606214-8b456906c813?w=1400&q=80',
+    icon: '👑'
+  },
+  {
+    name: 'Лондонский глаз',
+    addr: 'Riverside Building, County Hall, SE1 7PB',
+    query: 'London Eye, Riverside Building, London',
+    desc: 'Колесо обозрения высотой 135 м на берегу Темзы. Ночью — особенно красиво.',
+    img: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=1400&q=80',
+    icon: '🎡'
+  },
+  {
+    name: 'Лондонский Тауэр',
+    addr: 'London EC3N 4AB',
+    query: 'Tower of London, London',
+    desc: 'Средневековая крепость, тюрьма и хранилище королевских регалий. Основан в 1078 году.',
+    img: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1400&q=80',
+    icon: '🏰'
+  },
+  {
+    name: 'Тауэрский мост',
+    addr: 'Tower Bridge Rd, London SE1 2UP',
+    query: 'Tower Bridge, London',
+    desc: 'Визитная карточка Лондона. Стеклянный пол на высоте 42 м и разводные пролёты.',
+    img: 'https://images.unsplash.com/photo-1513026705753-bc3fffca8bf4?w=1400&q=80',
+    icon: '🌉'
+  },
+  {
+    name: 'Музей Шерлока Холмса',
+    addr: '221b Baker St, London NW1 6XE',
+    query: 'Sherlock Holmes Museum, 221b Baker St, London',
+    desc: 'Тот самый дом 221b с интерьерами викторианской эпохи. Обязателен для поклонников.',
+    img: 'https://images.unsplash.com/photo-1583241800698-9c2e0e0e1a3a?w=1400&q=80',
+    icon: '🔍'
+  },
+  {
+    name: 'Платформа 9¾',
+    addr: "King's Cross Station, Euston Rd, N1 9AL",
+    query: "Platform 9 3/4, King's Cross Station, London",
+    desc: 'Место отправления Хогвартс-экспресса. Фото с тележкой и магазин сувениров.',
+    img: 'https://images.unsplash.com/photo-1544213456-44c0e46a0d1a?w=1400&q=80',
+    icon: '⚡'
+  },
+  {
+    name: 'Warner Bros. Studio Tour',
+    addr: 'Studio Tour Dr, Leavesden, Watford WD25 7LR',
+    query: 'Warner Bros Studio Tour London, Watford',
+    desc: 'Съёмочные павильоны «Гарри Поттера»: Большой зал, Косой переулок, Хогвартс-экспресс. 3–4 часа волшебства.',
+    img: 'https://images.unsplash.com/photo-1599785817450-9bf6dbdb54f6?w=1400&q=80',
+    icon: '🧙'
+  },
+  {
+    name: 'Боро-маркет',
+    addr: '8 Southwark St, London SE1 1TL',
+    query: 'Borough Market, London',
+    desc: 'Старейший продовольственный рынок Лондона (с 1014 г.). Сыры, устрицы, уличная еда.',
+    img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80',
+    icon: '🧀'
+  }
+];
+
+const slidesEl = document.getElementById('slides');
+const dotsEl = document.getElementById('dots');
+const mapFrame = document.getElementById('mapFrame');
+let currentSlide = 0;
+
+attractions.forEach((a, i) => {
+  const slide = document.createElement('div');
+  slide.className = 'slide' + (i === 0 ? ' active' : '');
+  slide.style.backgroundImage = `linear-gradient(135deg,rgba(26,107,74,0.4),rgba(13,31,51,0.6)), url('${a.img}')`;
+  slide.innerHTML = `
+    <div class="slide-content">
+      <h3>${a.icon} ${a.name}</h3>
+      <div class="addr">📍 ${a.addr}</div>
+      <div class="desc">${a.desc}</div>
+    </div>`;
+  slidesEl.appendChild(slide);
+
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Слайд ${i+1}`);
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsEl.appendChild(dot);
+});
+
+function goToSlide(i){
+  currentSlide = (i + attractions.length) % attractions.length;
+  const slides = slidesEl.querySelectorAll('.slide');
+  const dots = dotsEl.querySelectorAll('.dot');
+  slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+  dots.forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+  updateMap();
+}
+function updateMap(){
+  const a = attractions[currentSlide];
+  mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(a.query)}&output=embed&z=15`;
+}
+document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentSlide + 1));
+
+// Клавиатура
+document.addEventListener('keydown', e => {
+  const sightsPanel = document.getElementById('sights');
+  if (!sightsPanel.classList.contains('active')) return;
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+});
+
+// Свайпы
+let touchStartX = 0;
+slidesEl.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive:true});
+slidesEl.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(diff) > 50) goToSlide(currentSlide + (diff < 0 ? 1 : -1));
+}, {passive:true});
+
+// Инициализация карты
+updateMap();
+
+// Автопрокрутка карусели (пауза при взаимодействии)
+let autoTimer = setInterval(() => goToSlide(currentSlide + 1), 9000);
+['click','touchstart','mouseenter'].forEach(evt => {
+  document.querySelector('.carousel-wrap').addEventListener(evt, () => {
+    clearInterval(autoTimer);
+    setTimeout(() => { autoTimer = setInterval(() => goToSlide(currentSlide + 1), 9000); }, 20000);
+  }, {passive:true, once:false});
+});
+</script>
+
+</body>
+</html>
